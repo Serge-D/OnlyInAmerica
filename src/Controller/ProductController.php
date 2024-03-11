@@ -12,4 +12,10 @@ class ProductController extends AbstractController
     {
         return $this -> render ('product/category.html.twig', ['slug' => $slug]);
     }
+
+    #[Route('/product/productlist')]
+    public function productList ()
+    {
+        return $this -> render ('product/productList.html.twig');
+    }
 }

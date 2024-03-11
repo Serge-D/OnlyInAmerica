@@ -30,4 +30,10 @@ class DefaultController extends AbstractController
     {
         return $this -> render('default/signIn.html.twig');
     }
+
+    #[Route('/apropos')]
+    public function aPropos ()
+    {
+        return $this -> render('default/aPropos.html.twig');
+    }
 }
