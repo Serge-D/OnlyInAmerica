@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CommentController extends AbstractController
 {
+    // est ce qu'il faudrait tout regrouper en un seul bloc ou un comment add et le reste regroupé
     #[Route('comment/commentadd')]
     public function commentAdd ()
     {

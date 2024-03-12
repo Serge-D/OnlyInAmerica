@@ -7,6 +7,28 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+
+    #[Route('admin/usermanagement')]
+    public function userManagement ()
+    {
+        return $this -> render('admin/userManagement.html.twig');
+    }
+    #[Route('admin/productmanagement')]
+    public function productManagement ()
+    {
+        return $this -> render('admin/productManagement.html.twig');
+    }
+    #[Route('admin/reservationmanagement')]
+    public function reservationManagement ()
+    {
+        return $this -> render('admin/reservationManagement.html.twig');
+    }
+    #[Route('admin/commentmanagement')]
+    public function commentManagement ()
+    {
+        return $this -> render('admin/commentManagement.html.twig');
+    }
+    // Partie surement à supprimer
     #[Route('admin/useradd')]
     public function userAdd ()
     {

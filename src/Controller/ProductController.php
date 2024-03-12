@@ -7,10 +7,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-    #[Route('/product/category/{slug}')]
-    public function category ($slug)
+
+    #[Route('/product/category')]
+    public function category ()
     {
-        return $this -> render ('product/category.html.twig', ['slug' => $slug]);
+        return $this -> render ('product/category.html.twig');
     }
 
     #[Route('/product/productlist')]
