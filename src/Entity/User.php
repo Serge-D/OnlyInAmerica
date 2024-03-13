@@ -6,44 +6,53 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $first_name = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $last_name = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $zip_code = null;
+    private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adress = null;
+    private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $country = null;
+    private ?string $zipCode = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $phone = null;
+    private ?string $country = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $roles = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $phone = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -51,49 +60,17 @@ class User
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
-    private Collection $comments;
-
-    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'user')]
-    private Collection $reservations;
-
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'products')]
-    private Collection $users;
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'users')]
+    private Collection $products;
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
-        $this->reservations = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->first_name;
-    }
-
-    public function setFirstName(string $first_name): static
-    {
-        $this->first_name = $first_name;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->last_name;
-    }
-
-    public function setLastName(string $last_name): static
-    {
-        $this->last_name = $last_name;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -108,7 +85,44 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -120,38 +134,59 @@ class User
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): static
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): static
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
     public function getZipCode(): ?string
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(string $zip_code): static
+    public function setZipCode(string $zipCode): static
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(string $adress): static
+    public function setAddress(string $address): static
     {
-        $this->adress = $adress;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): static
-    {
-        $this->country = $country;
+        $this->address = $address;
 
         return $this;
     }
@@ -168,26 +203,26 @@ class User
         return $this;
     }
 
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): static
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
     public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone(string $phone): static
+    public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getRoles(): ?string
-    {
-        return $this->roles;
-    }
-
-    public function setRoles(string $roles): static
-    {
-        $this->roles = $roles;
 
         return $this;
     }
@@ -217,88 +252,25 @@ class User
     }
 
     /**
-     * @return Collection<int, Comment>
+     * @return Collection<int, Product>
      */
-    public function getComments(): Collection
+    public function getProducts(): Collection
     {
-        return $this->comments;
+        return $this->products;
     }
 
-    public function addComment(Comment $comment): static
+    public function addProduct(Product $product): static
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setUser($this);
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
         }
 
         return $this;
     }
 
-    public function removeComment(Comment $comment): static
+    public function removeProduct(Product $product): static
     {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Reservation>
-     */
-    public function getReservations(): Collection
-    {
-        return $this->reservations;
-    }
-
-    public function addReservation(Reservation $reservation): static
-    {
-        if (!$this->reservations->contains($reservation)) {
-            $this->reservations->add($reservation);
-            $reservation->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReservation(Reservation $reservation): static
-    {
-        if ($this->reservations->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getUser() === $this) {
-                $reservation->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeProduct($this);
-        }
+        $this->products->removeElement($product);
 
         return $this;
     }

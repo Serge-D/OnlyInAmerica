@@ -38,10 +38,14 @@ class Product
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'product')]
     private Collection $reservations;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'products')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,6 +168,33 @@ class Product
             if ($reservation->getProduct() === $this) {
                 $reservation->setProduct(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeProduct($this);
         }
 
         return $this;
