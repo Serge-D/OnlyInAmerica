@@ -18,5 +18,9 @@ class ProductController extends AbstractController
     public function productList ()
     {
         return $this -> render ('product/productList.html.twig');
+    }#[Route('/product/productpage')]
+    public function productPage ()
+    {
+        return $this -> render ('product/productPage.html.twig');
     }
 }

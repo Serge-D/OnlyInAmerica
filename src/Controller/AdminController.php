@@ -7,6 +7,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+    #[Route('admin/backoffice')]
+    public function backoffice ()
+    {
+        return $this -> render('admin/backoffice.html.twig');
+    }
 
     #[Route('admin/usermanagement')]
     public function userManagement ()
