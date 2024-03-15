@@ -19,18 +19,6 @@ class DefaultController extends AbstractController
         return $this -> render('default/contact.html.twig');
     }
 
-    #[Route('/login')]
-    public function logIn ()
-    {
-        return $this -> render('default/logIn.html.twig');
-    }
-
-    #[Route('/signin')]
-    public function signIn ()
-    {
-        return $this -> render('default/signIn.html.twig');
-    }
-
     #[Route('/apropos')]
     public function aPropos ()
     {

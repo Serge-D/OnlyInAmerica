@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use App\Form\ProductType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
@@ -53,9 +57,31 @@ class AdminController extends AbstractController
     }
 
     #[Route('admin/productadd')]
-    public function productAdd ()
+    public function productAdd (Request $request, EntityManagerInterface $manager)
     {
-        return $this -> render('admin/productAdd.html.twig');
+        #Création d'un Product vide
+        $product = new Product();
+
+        #Création du formulaire
+        $form = $this->createForm(ProductType::class, $product);
+
+        #passage de la requete au formulaire pour traitement
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+
+            #sauvegarde dans la bdd
+            $manager->persist($product);
+            $manager->flush();
+
+            #redirection page backoffice
+            return $this->redirectToRoute('app_admin_backoffice');
+
+        }
+
+        return $this -> render('admin/productAdd.html.twig',[
+            'form'=>$form
+        ]);
     }
 
     #[Route('admin/productremove')]
