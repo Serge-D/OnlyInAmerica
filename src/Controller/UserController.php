@@ -52,6 +52,9 @@ class UserController extends AbstractController
             $manager->persist($user); #persist = enregistrer / le manager enregistre dans la bdd
             $manager->flush(); #flush équivaklent d'execute
 
+            #Notification
+            $this->addFlash('success','Félicitations, vous pouvez vous connecter.');
+
             #Redirection page d'accueil
             return $this->redirectToRoute('app_default_home');
 

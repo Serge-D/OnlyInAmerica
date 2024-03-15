@@ -27,6 +27,10 @@ class ProductType extends AbstractType
             ->add('description', TextType::class,[
                 'label'=>'Description'
             ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'id',
+            ])
             ->add('submit',SubmitType::class,[
                 'label'=>'Enregistrer'
             ])

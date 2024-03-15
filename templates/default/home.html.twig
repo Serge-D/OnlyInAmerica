@@ -3,7 +3,12 @@
 
 {% block body %}
     {% include 'components/_navbar.html.twig' %}
-    <h1 class="display-1">OnlyInAmerica</h1>
+    <h1 class="display-1">
+        {% if app.user %}
+            Bonjour {{ app.user.firstName }}
+        {% endif %}
+        OnlyInAmerica
+    </h1>
 
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis consectetur deleniti deserunt expedita incidunt quos reiciendis tempore veritatis vitae voluptates.</p>
     {% include 'components/_footer.html.twig' %}
