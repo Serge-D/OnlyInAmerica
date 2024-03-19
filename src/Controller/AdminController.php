@@ -67,7 +67,7 @@ class AdminController extends AbstractController
             $manager->flush();
 
             #redirection page backoffice
-            return $this->redirectToRoute('app_admin_backoffice');
+            return $this->redirectToRoute('app_admin_dashboard');
 
         }
 

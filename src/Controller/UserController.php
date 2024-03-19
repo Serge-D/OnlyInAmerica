@@ -35,7 +35,8 @@ class UserController extends AbstractController
     {
         #Creation d'un User vide
         $user = new User();
-
+        $user->setCreatedAt(new \DateTimeImmutable());
+        $user->setUpdatedAt(new \DateTimeImmutable());
         #Création du formulaire
         $form = $this->createForm(UserType::class, $user);
 
