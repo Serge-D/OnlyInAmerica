@@ -3,15 +3,119 @@
 
 {% block body %}
 
-    <h1 class="display-1">
-        {% if app.user %}
-            Bonjour {{ app.user.firstName }}
-        {% endif %}
-        OnlyInAmerica
-    </h1>
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis consectetur deleniti deserunt expedita incidunt quos reiciendis tempore veritatis vitae voluptates.</p>
-    {% include 'components/_footer.html.twig' %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <img src="{{ asset('assets/images/GrandLogo.png') }}" alt="Image d'accueil" class="img-fluid" style="width: 50%; height: auto;">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <!-- Bouton de basculement pour les petits écrans -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCategories" aria-controls="navbarCategories" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="d-lg-none">Catégories</span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarCategories">
+                        <ul class="navbar-nav">
+                            <!-- Lien vers les 5 catégories -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'1'}) }}">Boissons</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'2'}) }}">Snacks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'3'}) }}">Confiseries</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'5'}) }}">Epicerie sucrée</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'6'}) }}">Epicerie salée</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Section avec une description et un carrousel -->
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Description -->
+            <div class="col-md-8">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <h2 class="card-title"> Description </h2>
+                        <p>OnlyInAmerica est la destination en ligne ultime pour les amateurs de saveurs américaines exclusives. Découvrez une sélection unique de produits alimentaires américains, des snacks aux boissons, en passant par les douceurs sucrées. Réservez vos favoris et plongez dans une expérience gustative authentique et inoubliable !</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Carrousel de catégories -->
+            <div class="col-md-4">
+                <h2>Catégories</h2>
+                <div id="carouselCategories" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="{{ path('app_product_productcategory', {'id':'1'}) }}">
+                                <img src="{{ asset('assets/images/CatégorieBoisson.jpg')}}"  class="d-block w-100" alt="Catégorie boissons">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h3>Boissons</h3>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ path('app_product_productcategory', {'id':'2'}) }}">
+                                <img src="{{ asset('assets/images/CatégorieSnack.jpg')}}" class="d-block w-100" alt="Catégorie snack">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h3>Snacks</h3>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ path('app_product_productcategory', {'id':'3'}) }}">
+                                <img src="{{ asset('assets/images/CatégorieConfiserie.jpg')}}" class="d-block w-100" alt="Catégorie confiseries">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h3>Confiseries</h3>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ path('app_product_productcategory', {'id':'5'}) }}">
+                                <img src="{{ asset('assets/images/CatégorieEpicerieSalée.jpg')}}" class="d-block w-100" alt="Catégorie épicerie salée">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h3>Epicerie salée</h3>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ path('app_product_productcategory', {'id':'6'}) }}">
+                                <img src="{{ asset('assets/images/CatégorieEpicerieSucrée.jpg')}}" class="d-block w-100" alt="Catégorie épicerie sucrée">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h3>Epicerie Sucrée</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCategories" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Précédent</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCategories" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Suivant</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 
