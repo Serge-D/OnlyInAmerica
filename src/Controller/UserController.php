@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\PasswordUserType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,47 @@ class UserController extends AbstractController
     #[Route('/user/profile')]
     public function userProfile ()
     {
-        return $this -> render('user/userProfile.html.twig');
+        // Récupérer l'utilisateur connecté à partir du token de sécurité
+        $user = $this->getUser();
+
+
+        // Vérifier si l'utilisateur est connecté
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non connecté');
+        }
+
+        // Vous pouvez maintenant passer l'utilisateur à votre template Twig pour l'affichage
+        return $this->render('user/userProfile.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route ('user/modifier-mot-de-passe')]
+    public function password(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager)
+    {
+
+        // Récupérer l'utilisateur connecté à partir du token de sécurité
+        $user = $this->getUser();
+
+        //on créé le form et on lui envoie les infos de l'user et le passwordhasher pour comparer les mdp
+        $form = $this->createForm(PasswordUserType::class, $user, [
+            'passwordHasher' => $passwordHasher
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $this->addFlash(
+                'success',
+                'Votre mot de passe est mis à jour'
+            );
+
+            $entityManager->flush(); //pas besoin de persist() car maj
+        }
+
+        return $this->render('user/changepwd.html.twig', [
+            'modifyPwd'=> $form->createView()
+        ]);
     }
 
     #[Route('/user/reservation')]
@@ -43,33 +84,29 @@ class UserController extends AbstractController
         #passer la requête au formulaire pour traitement
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
 
             #Encryptage du mot de passe
-            $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($hashedPassword);
+            # $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
+            # $user->setPassword($hashedPassword);
 
             #Sauvegarder dans la BDD
-            $manager->persist($user); #persist = enregistrer / le manager enregistre dans la bdd
-            $manager->flush(); #flush équivaklent d'execute
+            $manager->persist($user); #persist = enregistrer / dire au manager d'enregistrer dans la bdd
+            $manager->flush(); #flush équivalent d'execute / requete Insert
 
             #Notification
             $this->addFlash('success','Félicitations, vous pouvez vous connecter.');
 
             #Redirection page d'accueil
-            return $this->redirectToRoute('app_default_home');
+            return $this->redirectToRoute('app_login');
 
         }
 
         #Passage du formulaire à la vue
         return $this -> render('user/userRegister.html.twig', [
-            'form'=>$form
+            'registerForm'=>$form
         ]);
     }
 
-    #[Route('/user/connexion')]
-    public function userConnection ()
-    {
-        return $this -> render('user/userConnection.html.twig');
-    }
+
 }

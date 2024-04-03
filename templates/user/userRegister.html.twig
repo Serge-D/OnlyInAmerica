@@ -3,12 +3,16 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container my-3">
         <div class="row">
-            <div class="col-6 mx-auto">
-                <h1>Créer votre compte</h1>
-                {{ form(form) }}
+            <div class="col-md-6 mx-auto">
+                <h1 class="text-center">Créer votre compte</h1>
+                <div>
+                    {{ form(registerForm) }}
+                </div>
+                Vous avez déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a>
             </div>
+
         </div>
     </div>
 {% endblock %}

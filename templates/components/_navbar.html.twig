@@ -7,10 +7,12 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
                 <a class="nav-link active" aria-current="page" href="{{ path('app_product_productlist')}}">Produits</a>
-                <a class="nav-link" href="{{ path('app_default_apropos') }}">A propos</a>
                 {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="nav-link text-danger" href="{{ path('app_admin_dashboard') }}">Administration</a>
+                    {% if is_granted('ROLE_ADMIN')  %}
+                        <a class="nav-link text-danger" href="{{ path('admin') }}">Administration</a>
+                        <a class="nav-link " href="{{ path('app_user_userprofile') }}">Mon Profil</a>
+                    {% elseif is_granted('ROLE_USER') %}
+                        <a class="nav-link " href="{{ path('app_user_userprofile') }}">Mon Profil</a>
                     {% endif%}
                     <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                 {% else %}
@@ -18,6 +20,7 @@
                     <a class="nav-link" href="{{ path('app_login') }}">S'authentifier</a>
                 {% endif %}
                 <a class="nav-link" href="{{ path('app_default_contact') }}">Contact</a>
+                <a class="nav-link" href="{{ path('app_default_apropos') }}">A propos</a>
             </div>
         </div>
     </div>

@@ -32,7 +32,7 @@ class ProductController extends AbstractController
     #[Route('/productdetails/{name}')]
     public function productDetails($name, ProductRepository $productRepository)
     {
-        $product = $productRepository->find($name);
+        $product = $productRepository->findOneBy(['name'=>$name]);
         return $this -> render('product/productDetails.html.twig',[
             'product' => $product
         ]);
