@@ -20,19 +20,19 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/productcategory/{id}')]
-    public function productCategory($id, CategoryRepository $categoryRepository)
+    #[Route('/productcategory/{slug}')]
+    public function productCategory($slug, CategoryRepository $categoryRepository)
     {
-        $category = $categoryRepository->find($id);
+        $category = $categoryRepository->findOneBy(['slug'=>$slug]);
         return $this -> render('product/productCategory.html.twig',[
             'category' => $category
         ]);
     }
 
-    #[Route('/productdetails/{name}')]
-    public function productDetails($name, ProductRepository $productRepository)
+    #[Route('/productdetails/{slug}')]
+    public function productDetails($slug, ProductRepository $productRepository)
     {
-        $product = $productRepository->findOneBy(['name'=>$name]);
+        $product = $productRepository->findOneBy(['slug'=>$slug]);
         return $this -> render('product/productDetails.html.twig',[
             'product' => $product
         ]);

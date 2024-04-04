@@ -41,12 +41,16 @@ class Product
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'products')]
     private Collection $users;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -196,6 +200,18 @@ class Product
         if ($this->users->removeElement($user)) {
             $user->removeProduct($this);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

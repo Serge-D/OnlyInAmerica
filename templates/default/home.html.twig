@@ -23,19 +23,19 @@
                         <ul class="navbar-nav">
                             <!-- Lien vers les 5 catégories -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'1'}) }}">Boissons</a>
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'slug':'boissons'}) }}">Boissons</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'2'}) }}">Snacks</a>
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'slug':'snacks'}) }}">Snacks</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'3'}) }}">Confiseries</a>
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'slug':'confiseries'}) }}">Confiseries</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'5'}) }}">Epicerie sucrée</a>
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'slug':'epicerie-sucree'}) }}">Epicerie sucrée</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_product_productcategory', {'id':'6'}) }}">Epicerie salée</a>
+                                <a class="nav-link" href="{{ path('app_product_productcategory', {'slug':'epicerie-salee'}) }}">Epicerie salée</a>
                             </li>
                         </ul>
                     </div>
@@ -63,7 +63,7 @@
                 <div id="carouselCategories" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <a href="{{ path('app_product_productcategory', {'id':'1'}) }}">
+                            <a href="{{ path('app_product_productcategory', {'slug':'boissons'}) }}">
                                 <img src="{{ asset('assets/images/CatégorieBoisson.jpg')}}"  class="d-block w-100" alt="Catégorie boissons">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h3>Boissons</h3>
@@ -71,7 +71,7 @@
                             </a>
                         </div>
                         <div class="carousel-item">
-                            <a href="{{ path('app_product_productcategory', {'id':'2'}) }}">
+                            <a href="{{ path('app_product_productcategory', {'slug':'snacks'}) }}">
                                 <img src="{{ asset('assets/images/CatégorieSnack.jpg')}}" class="d-block w-100" alt="Catégorie snack">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h3>Snacks</h3>
@@ -79,7 +79,7 @@
                             </a>
                         </div>
                         <div class="carousel-item">
-                            <a href="{{ path('app_product_productcategory', {'id':'3'}) }}">
+                            <a href="{{ path('app_product_productcategory', {'slug':'confiseries'}) }}">
                                 <img src="{{ asset('assets/images/CatégorieConfiserie.jpg')}}" class="d-block w-100" alt="Catégorie confiseries">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h3>Confiseries</h3>
@@ -87,7 +87,7 @@
                             </a>
                         </div>
                         <div class="carousel-item">
-                            <a href="{{ path('app_product_productcategory', {'id':'5'}) }}">
+                            <a href="{{ path('app_product_productcategory', {'slug':'epicerie-salee'}) }}">
                                 <img src="{{ asset('assets/images/CatégorieEpicerieSalée.jpg')}}" class="d-block w-100" alt="Catégorie épicerie salée">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h3>Epicerie salée</h3>
@@ -95,7 +95,7 @@
                             </a>
                         </div>
                         <div class="carousel-item">
-                            <a href="{{ path('app_product_productcategory', {'id':'6'}) }}">
+                            <a href="{{ path('app_product_productcategory', {'slug':'epicerie-sucree'}) }}">
                                 <img src="{{ asset('assets/images/CatégorieEpicerieSucrée.jpg')}}" class="d-block w-100" alt="Catégorie épicerie sucrée">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h3>Epicerie Sucrée</h3>
