@@ -86,7 +86,7 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            #Encryptage du mot de passe
+            #Encryptage du mdp
             # $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
             # $user->setPassword($hashedPassword);
 

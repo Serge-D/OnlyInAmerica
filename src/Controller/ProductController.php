@@ -9,7 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-
     #[Route('/productlist')]
     public function productList (ProductRepository $productRepository)
     {

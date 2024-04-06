@@ -44,6 +44,12 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\Column]
+    private ?float $price = null;
+
+    #[ORM\Column]
+    private ?float $tva = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -212,6 +218,42 @@ class Product
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    // fonction pour retourner le prix avec la tva
+    public function getPriceWt()
+    {
+        $coeff = 1 + ($this->tva/100);
+        $priceWt = $coeff * $this->price;
+
+        //Formater le résultat avec une seule décimale après la virgule
+        $priceWtFormatted = number_format($priceWt, 1);
+
+        return $priceWtFormatted;
+    }
+
+    public function getTva(): ?float
+    {
+        return $this->tva;
+    }
+
+    public function setTva(float $tva): static
+    {
+        $this->tva = $tva;
 
         return $this;
     }
