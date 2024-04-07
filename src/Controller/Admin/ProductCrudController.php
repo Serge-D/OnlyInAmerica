@@ -33,17 +33,34 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name')->setLabel('Nom')->setHelp('Nom du produit'),
-            SlugField::new('slug')->setTargetFieldName('name')->setLabel('URL')->setHelp('URL de votre catégorie'),
-            TextEditorField::new('description')->setLabel('Description')->setHelp('Description du produit'),
-            ImageField::new('image')->setLabel('Image')->setHelp('Image du produit')->setUploadedFileNamePattern('[year]-[month]-[day]-[contenthash].[extension]')->setBasePath('/uploads')->setUploadDir('/public/uploads'),
+            TextField::new('name')
+                ->setLabel('Nom')
+                ->setHelp('Nom du produit'),
+            SlugField::new('slug')
+                ->setTargetFieldName('name')
+                ->setLabel('URL')
+                ->setHelp('URL de votre catégorie'),
+            TextEditorField::new('description')
+                ->setLabel('Description')
+                ->setHelp('Description du produit'),
+            ImageField::new('image')
+                ->setLabel('Image')
+                ->setHelp('Image du produit')
+                ->setUploadedFileNamePattern('[year]-[month]-[day]-[contenthash].[extension]')
+                ->setBasePath('/uploads')
+                ->setUploadDir('/public/uploads'),
             AssociationField::new('category','Catégorie associée'),
-            NumberField::new('price')->setLabel('Prix HT')->setHelp('Prix HT du produit sans le sigle €'),
-            ChoiceField::new('tva')->setLabel('Taux de TVA')->setChoices([
+            NumberField::new('price')
+                ->setLabel('Prix HT')
+                ->setHelp('Prix HT du produit sans le sigle €'),
+            ChoiceField::new('tva')
+                ->setLabel('Taux de TVA')
+                ->setChoices([
                 '5,5%' => '5.5',
                 '10%' => '10',
                 '20%' => '20'
-            ])
+                ])
+                ->onlyOnForms(),
             /*
              * pour le imagefield le setbasepath on parle d'affichage pour le setuploadDir on est en php donc obligé d'indiqué la racine
              */
