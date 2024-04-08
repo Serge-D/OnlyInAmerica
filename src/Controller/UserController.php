@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\PasswordUserType;
 use App\Form\UserType;
@@ -96,6 +97,13 @@ class UserController extends AbstractController
 
             #Notification
             $this->addFlash('success','Félicitations, vous pouvez vous connecter.');
+
+            #Envoi d'un email de confirmation d'inscription
+            $mail = new Mail();
+            $vars = [
+                'firstname' => $user->getFirstName()
+            ];
+            $mail->send($user->getEmail(),$user->getFirstName().' '.$user->getFirstName(),'Bienvenue sur OnlyInAmerica','welcome.html', $vars);
 
             #Redirection page d'accueil
             return $this->redirectToRoute('app_login');

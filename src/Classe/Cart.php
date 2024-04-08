@@ -11,11 +11,14 @@ class Cart
 
     }
 
-    //function pour ajouter des éléments au panier
+    /*
+     * add()
+     * fonction permettant l'ajout d'un produit dans le panier
+     */
     public function add($product)
     {
         // Appeler la session Cart de symfony
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
 
         // Ajouter une quantity +1 à mon produit
         if(isset($cart[$product->getId()])){
@@ -35,10 +38,13 @@ class Cart
 
     }
 
-    //function pour supprimer des élèments du panier
+    /*
+     * decrease()
+     * fonction permettant la suppression d'un produit dans le panier
+     */
     public function decrease($id)
     {
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
 
         if($cart[$id]['quantity'] > 1){
             $cart[$id]['quantity'] = $cart[$id]['quantity']-1;
@@ -50,10 +56,13 @@ class Cart
         $this->requestStack->getSession()->set('cart', $cart);
     }
 
-    /// function pour avoir la quantité totale du panier
+    /*
+     * fullquantity()
+     * fonction retournant le nombre total du produit au panier
+     */
     public function fullQuantity()
     {
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
         $quantity = 0;
 
         //si le panier est vide
@@ -70,10 +79,13 @@ class Cart
         return $quantity;
     }
 
-    // fonction pour avoir le prix total avec taxe du panier
+    /*
+     * getTotalWt()
+     * fonction retournant le prix total des produits au panier
+     */
     public function getTotalWt()
     {
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
         $price = 0;
 
         //si le panier est vide
@@ -90,13 +102,19 @@ class Cart
     }
 
 
-    // function pour supprimer tous les éléments du panier
+    /*
+     * remove()
+     * fonction permettant de supprimer totalement le panier
+     */
     public function remove()
     {
         return $this->requestStack->getSession()->remove('cart');
     }
 
-    // function pour avoir le panier de la session en cours
+    /*
+     * getCart()
+     * fonction retournant le panier
+     */
     public function getCart()
     {
         //session en cours du panier
