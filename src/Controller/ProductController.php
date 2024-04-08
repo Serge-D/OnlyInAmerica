@@ -23,6 +23,11 @@ class ProductController extends AbstractController
     public function productCategory($slug, CategoryRepository $categoryRepository)
     {
         $category = $categoryRepository->findOneBy(['slug'=>$slug]);
+
+        if(!$category){
+            return $this->redirectToRoute('app_default_home');
+        }
+
         return $this -> render('product/productCategory.html.twig',[
             'category' => $category
         ]);
@@ -32,6 +37,11 @@ class ProductController extends AbstractController
     public function productDetails($slug, ProductRepository $productRepository)
     {
         $product = $productRepository->findOneBy(['slug'=>$slug]);
+
+        if(!$product){
+            return $this->redirectToRoute('app_default_home');
+        }
+
         return $this -> render('product/productDetails.html.twig',[
             'product' => $product
         ]);

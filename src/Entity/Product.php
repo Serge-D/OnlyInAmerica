@@ -238,12 +238,8 @@ class Product
     public function getPriceWt()
     {
         $coeff = 1 + ($this->tva/100);
-        $priceWt = $coeff * $this->price;
 
-        //Formater le résultat avec une seule décimale après la virgule
-        $priceWtFormatted = number_format($priceWt, 1);
-
-        return $priceWtFormatted;
+        return $coeff * $this->price;
     }
 
     public function getTva(): ?float
