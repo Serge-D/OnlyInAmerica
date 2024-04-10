@@ -116,6 +116,22 @@
         </div>
     </div>
 
+    <div class="container">
+        <h2 class="text-center">Produit à la une</h2>
+        <div class="row">
+            {% for product in productsInHomepage %}
+               <div class="col lg-4">
+                   <img src="/uploads/{{ product.image }}" alt="{{ product.name }}" class="img-fluid">
+                   <h2 class="fw-normal mt-2">{{ product.name }}</h2>
+                   <div style="font-size: 12px;">
+                       {{ product.description|raw }}
+                   </div>
+                   <p><a href="{{ path('app_product_productdetails', {slug : product.slug}) }}" class="btn btn-dark mt-2">Découvrir</a></p>
+               </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}
 
 

@@ -6,6 +6,7 @@ use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\PasswordUserType;
 use App\Form\UserType;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,12 +67,6 @@ class UserController extends AbstractController
         return $this -> render('user/userReservation.html.twig');
     }
 
-    #[Route('/user/favorite')]
-    public function userFavorite ()
-    {
-        return $this -> render('user/userFavorite.html.twig');
-    }
-
     #[Route('/user/inscription')]
     public function userRegister (Request $request,UserPasswordHasherInterface $hasher ,EntityManagerInterface $manager)
     {
@@ -116,5 +111,49 @@ class UserController extends AbstractController
         ]);
     }
 
+
+    #[Route('/user/favorite')]
+    public function userFavorite ()
+    {
+        return $this -> render('user/userFavorite.html.twig');
+    }
+    #[Route('/user/favorite/add/{id}' , name: 'app_user_addfavorite')]
+    public function addFavorite($id, ProductRepository $productRepository, EntityManagerInterface $entityManager, Request $request)
+    {
+        //1. récuperer l'objet du produit souhaité
+        $product = $productRepository->findOneById($id);
+
+        //2. si produit existant, ajouter le produit aux favoris
+        if($product){
+            $this->getUser()->addProduct($product);
+            //3. sauvergarder en bdd
+            $entityManager->flush();
+        }
+
+        $this->addFlash('success','Produit ajouté à vos favoris');
+
+        //redirection vers la dernière url visitée
+        return $this->redirect($request->headers->get('referer'));
+
+    }
+    #[Route('/user/favorite/remove/{id}' , name: 'app_user_removefavorite')]
+    public function removeFavorite($id, ProductRepository $productRepository, EntityManagerInterface $entityManager, Request $request)
+    {
+        //1. récuperer l'objet du produit à supprimer
+        $product = $productRepository->findOneById($id);
+
+        //2. si produit existant, supprimer le produit aux favoris
+        if($product){
+            $this->addFlash('success','Produit supprimé de vos favoris');
+
+            $this->getUser()->removeProduct($product);
+            //3. sauvergarder en bdd
+            $entityManager->flush();
+        }else{
+            $this->addFlash('danger','Produit introuvable');
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+    }
 
 }

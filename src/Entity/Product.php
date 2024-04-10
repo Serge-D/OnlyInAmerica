@@ -50,6 +50,9 @@ class Product
     #[ORM\Column]
     private ?float $tva = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isHomepage = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -250,6 +253,18 @@ class Product
     public function setTva(float $tva): static
     {
         $this->tva = $tva;
+
+        return $this;
+    }
+
+    public function isIsHomepage(): ?bool
+    {
+        return $this->isHomepage;
+    }
+
+    public function setIsHomepage(?bool $isHomepage): static
+    {
+        $this->isHomepage = $isHomepage;
 
         return $this;
     }

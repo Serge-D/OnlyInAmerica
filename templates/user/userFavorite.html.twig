@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes favoris{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1 class="p-2">Mon Profil Utilisateur</h1>
+        <div class="row">
+            <div class="col-md-3">
+                {% include '/components/_menuProfil.html.twig' %}
+            </div>
+            <div class="col-md-9">
+                <h5>Mes favoris</h5>
+                {% if app.user.products|length > 0 %}
+                    <div class="row">
+                        {% for product in app.user.products %}
+                            <div class="col-md-3">
+                                <img src="/uploads/{{ product.image }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+                                <h5 class="text-center">{{ product.name }}</h5>
+                                <div class="text-center">
+                                    <div>{{ product.price|price }}</div>
+                                    <a href="{{ path('app_product_productdetails', {'slug': product.slug}) }}" class="btn btn-dark mt-2">Description</a>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <a href="{{ path('app_user_removefavorite', { id : product.id} ) }}" class="small text-danger">Supprimer</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    Vous n'avez pas de produits dans vos favoris.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

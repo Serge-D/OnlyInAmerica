@@ -18,14 +18,20 @@ class ContactType extends AbstractType
         $builder
             ->add('fullname', TextType::class,[
                 'label'=>'Nom & Prénom',
+                'attr' => [
+                    'placeholder'=>'Veuillez saisir votre nom et prénom'
+                ],
                 'constraints'=>[
                     new NotBlank([
-                        'message'=>'Veuillez saisir votre nom'
+                        'message'=>'Veuillez saisir votre nom et prénom'
                     ])
                 ]
             ])
             ->add('email', EmailType::class,[
                 'label'=>'Adresse mail',
+                'attr' => [
+                    'placeholder'=>'Veuillez saisir votre adresse mail'
+                ],
                 'constraints'=>[
                     new NotBlank([
                         'message'=>'Veuillez saisir votre adresse mail'
@@ -34,6 +40,9 @@ class ContactType extends AbstractType
             ])
             ->add('message', TextareaType::class,[
                 'label'=>'Message',
+                'attr' => [
+                    'placeholder'=>'En quoi pouvons nous vous aider ?'
+                ],
                 'constraints'=>[
                     new NotBlank([
                         'message'=>'Veuillez saisir votre message'
@@ -41,7 +50,10 @@ class ContactType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class,[
-                'label'=>'Envoyer'
+                'label'=>'Envoyer',
+                'attr' => [
+                    'class'=>'btn-success'
+                ],
             ])
         ;
     }

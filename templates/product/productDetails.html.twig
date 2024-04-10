@@ -13,8 +13,21 @@
                 <p>{{ product.description | raw }}</p>
                 <div class="mt-3">
                     <a href="{{ path('app_cart_add', {id : product.id}) }}" class="btn btn-dark">Ajouter au Panier</a>
-                    <button class="btn btn-dark">Commentaires</button>
-                    <button class="btn btn-dark">Ajouter aux favoris</button>
+                    <a href="#" class="btn btn-dark">Commentaires</a>
+                    {% if app.user %}
+                        {% if product in app.user.products %}
+                            <a href="{{ path('app_user_removefavorite', {id: product.id}) }}" class="btn btn-dark">Supprimer des favoris</a>
+                        {% else %}
+                            <a class="btn btn-dark" href="{{ path('app_user_addfavorite', {id : product.id}) }}">Ajouter aux favoris</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Ajouter aux favoris</a>
+                    {% endif %}
+                    <div class="collapse" id="collapseExample">
+                        <div class="small">
+                            Pour ajouter ce produit à vos favoris, <a href="{{ path('app_login') }}">connectez-vous</a> ou <a href="{{ path('app_user_userregister') }}">inscrivez-vous</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
