@@ -26,7 +26,7 @@ class ContactController extends AbstractController
                 'mail' => $form->getData()['email'],
                 'message' => $form->getData()['message']
             ];
-            $mail->send('dingreville-s@live.fr','Admin','Mail de la section contact','contactMail.html',$vars);
+            $mail->send('serge.dingreville.d@gmail.com','Admin','Mail de la section contact','contactMail.html',$vars);
 
             return $this->redirectToRoute('app_default_home');
         }

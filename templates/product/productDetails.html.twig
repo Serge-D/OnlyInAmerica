@@ -13,7 +13,7 @@
                 <p>{{ product.description | raw }}</p>
                 <div class="mt-3">
                     <a href="{{ path('app_cart_add', {id : product.id}) }}" class="btn btn-dark">Ajouter au Panier</a>
-                    <a href="#" class="btn btn-dark">Commentaires</a>
+                    <a href="{{ path('app_comment_add', {slug : product.slug}) }}" class="btn btn-dark">Ajouter un commentaire</a>
                     {% if app.user %}
                         {% if product in app.user.products %}
                             <a href="{{ path('app_user_removefavorite', {id: product.id}) }}" class="btn btn-dark">Supprimer des favoris</a>
@@ -39,7 +39,11 @@
                 {% else %}
                     <ul class="list-group">
                         {% for comment in product.comments %}
-                            <li class="list-group-item">{{ comment.content }}</li>
+                            <li class="list-group-item">
+                                <strong>{{ comment.user.firstname }}</strong> : <br/>
+                                {{ comment.commentContent }} <br/>
+                                Le : {{ comment.createdAt|date('d/m/Y H:i') }}
+                            </li>
                         {% endfor %}
                     </ul>
                 {% endif %}
