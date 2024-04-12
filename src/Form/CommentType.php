@@ -18,9 +18,11 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('comment_content', TextareaType::class)
-            ->add('date', DateType::class, [
-                'widget' => 'single_text',
+            ->add('comment_content', TextareaType::class,[
+                'label' => 'Votre commentaire',
+                'attr' => [
+                    'placeholder' => 'Veuillez indiquer votre commentaire ici'
+                ]
             ])
             ->add('submit', SubmitType::class,[
                 'label'=>'Envoyer',

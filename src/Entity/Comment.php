@@ -17,8 +17,6 @@ class Comment
     #[ORM\Column(type: Types::TEXT)]
     private ?string $comment_content = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -42,18 +40,6 @@ class Comment
     public function setCommentContent(string $comment_content): static
     {
         $this->comment_content = $comment_content;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): static
-    {
-        $this->date = $date;
 
         return $this;
     }
