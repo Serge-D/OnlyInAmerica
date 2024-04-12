@@ -54,15 +54,21 @@ class CommentController extends AbstractController
         ]);
     }
 
-    #[Route('comment/commentremove')]
-    public function commentRemove ()
+    #[Route('comment/delete/{id}' , name: 'app_comment_delete')]
+    public function delete($id, EntityManagerInterface $entityManager)
     {
-        return $this -> render('comment/commentRemove.html.twig');
-    }
+        //récupération du commentaire depuis la bdd
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
 
-    #[Route('comment/commentmodify')]
-    public function commentModify ()
-    {
-        return $this -> render('comment/commentModify.html.twig');
+        //vérification si le commentaire existe en bdd
+        if(!$comment){
+            return $this->redirectToRoute('app_user_comment');
+        }
+        //suppression du commentaire en bdd
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        return $this ->redirectToRoute('app_user_comment');
     }
+    
 }

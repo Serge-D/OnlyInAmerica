@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes favoris{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1 class="p-2">Mon Profil Utilisateur</h1>
+        <div class="row">
+            <div class="col-md-3">
+                {% include '/components/_menuProfil.html.twig' %}
+            </div>
+            <div class="col-md-9">
+                <h5>Mes Commentaires</h5>
+                {% if comments|length > 0 %}
+                    <div class="row">
+                        {% for comment in comments %}
+                            Produit : {{ comment.product.name }} / Date : {{ comment.createdAt|date('d/m/Y H:i') }}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <strong>Mon commentaire :</strong>
+                                    <p class="card-text">{{ comment.commentContent|raw }}</p>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="{{ path('app_comment_delete',{id: comment.id}) }}" class="btn btn-danger m-1">Supprimer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    Vous n'avez pas de commentaires.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

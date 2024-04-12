@@ -6,6 +6,7 @@ use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\PasswordUserType;
 use App\Form\UserType;
+use App\Repository\CommentsRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -154,6 +155,18 @@ class UserController extends AbstractController
         }
 
         return $this->redirect($request->headers->get('referer'));
+    }
+    #[Route('/user/comment', name: 'app_user_comment')]
+    public function userComment(CommentsRepository $commentsRepository)
+    {
+        $user = $this->getUser();
+        $comments = $commentsRepository->findBy(['user'=>$user]);
+
+
+        return $this->render('user/userComment.html.twig',[
+            'user' => $user,
+            'comments' => $comments
+        ]);
     }
 
 }
