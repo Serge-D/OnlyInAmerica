@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifiez votre mot de passe{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1 class="p-2">Mon Profil Utilisateur</h1>
+
+        <div class="row">
+            <div class="col-md-3">
+                {% include '/components/_menuProfil.html.twig' %}
+            </div>
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between">
+                    <h5>Mes adresses</h5>
+                    <a href="{{ path('app_user_address_form') }}" class="btn btn-dark">Ajouter une adresse</a>
+                </div>
+
+                {% if app.user.addresses|length == 0 %}
+                    <p>Vous n'avez pas encore enregistré d'adresse sur votre compte OnlyInAmerica</p>
+                {% else %}
+                    <div class="row">
+                        {% for address in app.user.addresses %}
+                            <div class="col-md-4 mt-2">
+                                <div class="bg-light p-2 text-center">
+                                    <strong>{{ address.firstname }} {{ address.lastname }}</strong><br />
+                                    {{ address.address }}<br />
+                                    {{ address.zipcode }} {{ address.city }}<br />
+                                    {{ address.country }}<br />
+                                    Téléphone : {{ address.phone }}<br />
+                                    <a href="{{ path('app_user_address_form', { id : address.id })}}" class="text-secondary small">Modifier</a><br />
+                                    <a href="{{ path('app_user_address_delete', { id : address.id })}}" class="text-danger small">Supprimer</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

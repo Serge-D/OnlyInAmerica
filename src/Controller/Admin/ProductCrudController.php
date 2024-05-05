@@ -68,9 +68,9 @@ class ProductCrudController extends AbstractCrudController
             ChoiceField::new('tva')
                 ->setLabel('Taux de TVA')
                 ->setChoices([
-                '5,5%' => '5.5',
-                '10%' => '10',
-                '20%' => '20'
+                    '5,5%' => '5.5',
+                    '10%' => '10',
+                    '20%' => '20'
                 ])
                 ->onlyOnForms(),
             /*

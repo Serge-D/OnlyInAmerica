@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Classe\Mail;
+use App\Entity\Address;
 use App\Entity\User;
+use App\Form\AddressUserType;
 use App\Form\PasswordUserType;
 use App\Form\UserType;
+use App\Repository\AddressRepository;
 use App\Repository\CommentsRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -109,6 +112,71 @@ class UserController extends AbstractController
         #Passage du formulaire à la vue
         return $this -> render('user/userRegister.html.twig', [
             'registerForm'=>$form
+        ]);
+    }
+
+    #[Route('/user/addresses', name: 'app_user_addresses')]
+    public function addresses()
+    {
+        return $this -> render('user/addresses.html.twig');
+    }
+
+    #[Route('/user/address/delete/{id}', name: 'app_user_address_delete')]
+    public function addressDelete($id, AddressRepository $addressRepository, EntityManagerInterface $entityManager)
+    {
+        //Même principe pour le changement d'adresse, on vient récuperer l'adresse avec l'id et on check si elle existe et si elle correspond à l'user
+        $address = $addressRepository->findOneById($id);
+        if(!$address OR $address->getUser() != $this->getUser()){
+            return $this->redirectToRoute('app_user_addresses');
+        }
+        $this->addFlash(
+            'success',
+            'Votre adresse a bien été supprimée.'
+        );
+
+        $entityManager->remove($address);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_user_addresses');
+    }
+
+
+    //Utilisation de la même route pour ajouter ou modifier une adresse
+    //Pour cela, on va passer en argument un id optionnel et on le met dans defaults (du tableau Route) à null
+    //Si l'id existe on execute un traitement, sinon on créé un nouvel objet address
+    #[Route('/user/address/add/{id}', name: 'app_user_address_form', defaults: ['id'=> null ])]
+    public function addressForm(Request $request, EntityManagerInterface $entityManager, $id, AddressRepository $addressRepository)
+    {
+        if($id){
+            $address = $addressRepository->findOneById($id);
+            // Sécurisation du changement d'adresse => est ce que l'adresse appartient à l'user en cours et si elle existe bien
+            if(!$address OR $address->getUser() != $this->getUser()){
+                return $this->redirectToRoute('app_user_addresses');
+            }
+        }else{
+            $address = new Address();
+            $address->setUser($this->getUser());
+        }
+
+
+        $form = $this->createForm(AddressUserType::class, $address);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($address);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre adresse est sauvegardée.'
+            );
+
+            return $this->redirectToRoute('app_user_addresses');
+        }
+
+        return $this -> render('user/addressForm.html.twig', [
+            'adressForm' => $form
         ]);
     }
 

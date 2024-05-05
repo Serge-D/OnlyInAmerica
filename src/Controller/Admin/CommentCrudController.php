@@ -22,7 +22,7 @@ class CommentCrudController extends AbstractCrudController
     {
         return $crud
             ->setEntityLabelInSingular('Commentaire')
-            -> setEntityLabelInPlural('Commentaires')
+            ->setEntityLabelInPlural('Commentaires')
             ;
     }
 
