@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\Address;
 use App\Entity\User;
@@ -145,7 +146,7 @@ class UserController extends AbstractController
     //Pour cela, on va passer en argument un id optionnel et on le met dans defaults (du tableau Route) à null
     //Si l'id existe on execute un traitement, sinon on créé un nouvel objet address
     #[Route('/user/address/add/{id}', name: 'app_user_address_form', defaults: ['id'=> null ])]
-    public function addressForm(Request $request, EntityManagerInterface $entityManager, $id, AddressRepository $addressRepository)
+    public function addressForm(Request $request, EntityManagerInterface $entityManager, $id, AddressRepository $addressRepository, Cart $cart)
     {
         if($id){
             $address = $addressRepository->findOneById($id);
@@ -172,6 +173,12 @@ class UserController extends AbstractController
                 'Votre adresse est sauvegardée.'
             );
 
+            // permet de revenir sur la page app_order si le panier contient des éléments
+            if($cart->fullQuantity() > 0){
+                return $this->redirectToRoute('app_order');
+            }
+
+            // si le panier est vide on retourne sur la page de profil/adresses
             return $this->redirectToRoute('app_user_addresses');
         }
 

@@ -38,6 +38,11 @@ class Address
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    public function __toString(): string
+    {
+        //appel de tous les get de l'entité adresse pour afficher les informations
+        return $this->getFirstname().' '.$this->getLastname().'<br />'.$this->getAddress().'<br />'.$this->getZipcode().' '.$this->getCity().' -  '.$this->getCountry();
+    }
     public function getId(): ?int
     {
         return $this->id;
