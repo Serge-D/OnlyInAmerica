@@ -26,8 +26,18 @@ class Order
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?User $user = null;
 
-    #[ORM\OneToMany(targetEntity: OrderContent::class, mappedBy: 'myOrder')]
+    // cascade: ['persist'] => permet de manipuler l'objet orderContent lorsqu'il est question de persister les données
+    #[ORM\OneToMany(targetEntity: OrderContent::class, mappedBy: 'myOrder', cascade: ['persist'])]
     private Collection $orderContents;
+
+    /*
+     * état de la commande :
+     * 1: en attente de paiement
+     * 2: paiement validé
+     * 3: expédiée
+     */
+    #[ORM\Column]
+    private ?int $state = null;
 
     public function __construct()
     {
@@ -101,6 +111,18 @@ class Order
                 $orderContent->setMyOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getState(): ?int
+    {
+        return $this->state;
+    }
+
+    public function setState(int $state): static
+    {
+        $this->state = $state;
 
         return $this;
     }
