@@ -44,6 +44,11 @@ class OrderController extends AbstractController
     #[Route('/order/summary', name: 'app_order_summary')]
     public function orderRecapitulatif (Request $request, Cart $cart)
     {
+        // permet de rediriger l'utilisateur si il n'a pas soumis le formulaire comme par exemple en rejouant l'url (cadre d'une visite de page)
+        if($request->getMethod() != 'POST' ){
+            return $this->redirectToRoute('app_cart');
+        }
+
         // J'indique à symfony qu'il y a un form à écouter sur cette route
         $form = $this->createForm(OrderType::class, null, [
             'addresses' => $this->getUser()->getAddresses()
@@ -57,7 +62,7 @@ class OrderController extends AbstractController
         }
 
         return $this -> render('order/recapitulatif.html.twig', [
-            'choices' => $form->getData(),
+            'choices' => $form->getData(), //envoi de la variable choices au template
             'cart' => $cart->getCart(),
             'totalwt' => $cart->getTotalWt()
         ]);

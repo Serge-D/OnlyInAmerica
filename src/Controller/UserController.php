@@ -72,7 +72,7 @@ class UserController extends AbstractController
         return $this -> render('user/userReservation.html.twig');
     }
 
-    #[Route('/user/inscription')]
+    #[Route('/inscription', name: 'app_register')]
     public function userRegister (Request $request,UserPasswordHasherInterface $hasher ,EntityManagerInterface $manager)
     {
         #Creation d'un User vide
