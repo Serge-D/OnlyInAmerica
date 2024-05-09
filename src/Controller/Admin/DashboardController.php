@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Entity\Comment;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\Reservation;
 use App\Entity\User;
@@ -41,7 +42,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Produits', 'fas fa-candy-cane', Product::class);
         yield MenuItem::linkToCrud('Commentaires', 'fas fa-comment', Comment::class);
-        yield MenuItem::linkToCrud('Réservations', 'fas fa-briefcase', Reservation::class);
+        yield MenuItem::linkToCrud('Commandes', 'fas fa-briefcase', Order::class);
         yield MenuItem::linkToCrud('Categories', 'fas fa-list', Category::class);
     }
 }

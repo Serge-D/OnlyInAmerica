@@ -34,7 +34,7 @@ class Order
      * état de la commande :
      * 1: en attente de paiement
      * 2: paiement validé
-     * 3: expédiée
+     * 3: commande expédiée
      */
     #[ORM\Column]
     private ?int $state = null;
@@ -126,4 +126,32 @@ class Order
 
         return $this;
     }
+
+    //fonctions permettant d'obtenir le prix total ttc et le prix de la tva de la commande afin d'afficher les résultats sur easyadmin
+    public function getTotalTva()
+    {
+        $totalTva =0;
+        $products = $this->getOrderContents();
+
+        foreach ($products as $product){
+            $coeff = $product->getProductTva() / 100;
+            $totalTva += $product->getProductPrice() * $coeff;
+        }
+
+        return number_format($totalTva, 2);
+    }
+
+    public function getTotalWt()
+    {
+        $totalTtc =0;
+        $products = $this->getOrderContents();
+
+        foreach ($products as $product){
+            $coeff = 1+ ($product->getProductTva() / 100);
+            $totalTtc += ($product->getProductPrice() * $coeff) * $product->getProductQuantity();
+        }
+
+        return number_format($totalTtc, 2);
+    }
+
 }
