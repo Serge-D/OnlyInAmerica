@@ -11,6 +11,7 @@ use App\Form\PasswordUserType;
 use App\Form\UserType;
 use App\Repository\AddressRepository;
 use App\Repository\CommentsRepository;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -243,5 +244,33 @@ class UserController extends AbstractController
             'comments' => $comments
         ]);
     }
+    #[Route('/user/order', name: 'app_user_order')]
+    public function userOrder(OrderRepository $orderRepository)
+    {
+        $orders = $orderRepository->findBy([
+           'user' => $this->getUser(),
+            'state' => [2, 3] //pour rechercher les commandes dont le state est supérieur à 1
+        ]);
 
+        return $this->render('user/userOrders.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    #[Route('/user/ordercontent/{id_order}', name: 'app_user_ordercontent')]
+    public function userOrderContent($id_order, OrderRepository $orderRepository)
+    {
+        $order = $orderRepository->findOneBy([
+            'id' => $id_order,
+            'user' => $this->getUser()
+        ]);
+
+        if(!$order){
+            return $this->redirectToRoute('app_default_home');
+        }
+
+        return $this->render('user/userOrderContent.html.twig', [
+            'order' => $order
+        ]);
+    }
 }

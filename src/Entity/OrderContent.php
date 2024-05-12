@@ -107,4 +107,12 @@ class OrderContent
 
         return $this;
     }
+
+    // fonction permettant d'avoir le prix du produit ttc
+    public function getProductPriceWt()
+    {
+        $coeff = 1 + ($this->productTva/100);
+        return $coeff * $this->productPrice;
+    }
+
 }

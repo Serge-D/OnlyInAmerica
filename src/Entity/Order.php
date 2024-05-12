@@ -39,6 +39,9 @@ class Order
     #[ORM\Column]
     private ?int $state = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $stripe_session_id = null;
+
     public function __construct()
     {
         $this->orderContents = new ArrayCollection();
@@ -152,6 +155,18 @@ class Order
         }
 
         return number_format($totalTtc, 2);
+    }
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripe_session_id;
+    }
+
+    public function setStripeSessionId(?string $stripe_session_id): static
+    {
+        $this->stripe_session_id = $stripe_session_id;
+
+        return $this;
     }
 
 }

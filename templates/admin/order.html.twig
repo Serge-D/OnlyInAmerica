@@ -6,7 +6,8 @@
     <span>Date de la commande : {{ order.createdAt|date('d/m/y') }}</span><br />
     {# Nous allons chercher le template state afin d'afficher le statut de la commande et si il y a de nouveaux status qui sont ajoutés plus simple #}
     {# On procede à un include pour le template et on passe la variable field à qui on attribut un tableau avec la clé 'value' #}
-    <span>Statut de la commande : {% include 'admin/state.html.twig' with { field : {'value' : order.state} } %}</span>
+    <span>Statut de la commande : {% include 'admin/state.html.twig' with { field : {'value' : order.state} } %}</span><br />
+    <span>Stripe session id : {{ order.stripeSessionId }}</span>
 
     <div class="my-4">
         <strong>Adresse de livraison</strong><br />
