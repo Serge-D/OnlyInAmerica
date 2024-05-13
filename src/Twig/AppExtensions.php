@@ -21,7 +21,8 @@ class AppExtensions extends AbstractExtension implements GlobalsInterface
     public function getFilters()
     {
         return[
-          new TwigFilter('price', [$this, 'formatPrice'] )
+          new TwigFilter('price', [$this, 'formatPrice']),
+          new TwigFilter('html', [$this, 'html'], ['is_safe' => ['html']])
         ];
     }
 
@@ -35,5 +36,16 @@ class AppExtensions extends AbstractExtension implements GlobalsInterface
         return [
             'fullCartQuantity' => $this->cart->fullQuantity()
         ];
+    }
+
+    // protection des attaques XSS avec le filtre twig |raw
+    public function html($html)
+    {
+        return $html;
+    }
+
+    public function getName()
+    {
+        return 'acme_extension';
     }
 }

@@ -19,7 +19,7 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <strong>Mon commentaire :</strong>
-                                    <p class="card-text">{{ comment.commentContent|raw }}</p>
+                                    <p class="card-text">{{ comment.commentContent|html }}</p>
                                     <div class="d-flex justify-content-end">
                                         <a href="{{ path('app_comment_delete',{id: comment.id}) }}" class="btn btn-danger m-1">Supprimer</a>
                                     </div>
