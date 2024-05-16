@@ -48,16 +48,6 @@ class UserCrudController extends AbstractCrudController
                     ->setLabel('Prénom'),
                 EmailField::new('email')
                     ->setLabel('Email'),
-                TextField::new('address')
-                    ->setLabel('Adresse'),
-                TextField::new('zipCode')
-                    ->setLabel('Code Postal'),
-                TextField::new('city')
-                    ->setLabel('Ville'),
-                CountryField::new('country')
-                    ->setLabel('Pays'),
-                TelephoneField::new('phone')
-                    ->setLabel('Téléphone'),
                 TextField::new('password')
                     ->setLabel('Mot de passe'),
                 ChoiceField::new('roles', 'Roles')
@@ -82,16 +72,6 @@ class UserCrudController extends AbstractCrudController
                     ->setLabel('Nom'),
                 TextField::new('firstName')
                     ->setLabel('Prénom'),
-                TextField::new('address')
-                    ->setLabel('Adresse'),
-                TextField::new('zipCode')
-                    ->setLabel('Code Postal'),
-                TextField::new('city')
-                    ->setLabel('Ville'),
-                CountryField::new('country')
-                    ->setLabel('Pays'),
-                TelephoneField::new('phone')
-                    ->setLabel('Téléphone'),
                 #DateTimeField::new('updatedAt')
                 #    ->setLabel('Mis à jour le')
                 #    ->hideOnIndex(),
@@ -105,16 +85,6 @@ class UserCrudController extends AbstractCrudController
                 ->setLabel('Prénom'),
             EmailField::new('email')
                 ->setLabel('Email'),
-            TextField::new('address')
-                ->setLabel('Adresse'),
-            TextField::new('zipCode')
-                ->setLabel('Code Postal'),
-            TextField::new('city')
-                ->setLabel('Ville'),
-            CountryField::new('country')
-                ->setLabel('Pays'),
-            TelephoneField::new('phone')
-                ->setLabel('Téléphone'),
         ];
     }
 

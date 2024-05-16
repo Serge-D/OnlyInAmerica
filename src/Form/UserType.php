@@ -76,33 +76,6 @@ class UserType extends AbstractType
                 ],
                 'mapped' => false
             ])
-            ->add('address', TextType::class,[
-                'label'=>'Adresse',
-                'attr' => [
-                    'placeholder' => 'Indiquez votre adresse'
-                ]
-            ])
-            ->add('zipCode', TextType::class,[
-                'label'=>'Code Postal',
-                'attr' => [
-                    'placeholder' => 'Indiquez votre code postal'
-                ]
-            ])
-            ->add('country', CountryType::class,[
-                'label'=>'Pays'
-            ])
-            ->add('city', TextType::class,[
-                'label'=>'Ville',
-                'attr' => [
-                    'placeholder' => 'Indiquez votre ville'
-                ]
-            ])
-            ->add('phone', TelType::class,[
-                'label'=>'Téléphone',
-                'attr' => [
-                    'placeholder' => 'Indiquez votre numéro de téléphone'
-                ]
-            ])
             ->add('submit', SubmitType::class,[
                 'label'=>'Envoyer',
                 'attr' => [
