@@ -40,4 +40,10 @@ class DefaultController extends AbstractController
     {
         return $this -> render('default/politiqueDeConfidentialite.html.twig');
     }
+
+    #[Route('/politique-cookies', name: 'app_default_politiqueCookies')]
+    public function politiqueCookies (): Response
+    {
+        return $this -> render('default/politiqueCookies.html.twig');
+    }
 }
