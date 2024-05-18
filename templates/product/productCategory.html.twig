@@ -11,10 +11,13 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <img src="/uploads/{{ product.image }}" alt="{{ product.name }}" class="img-fluid">
-                            <h5 class="card-title">{{ product.name }}</h5>
+                            <h5 class="card-title text-center">{{ product.name }}</h5>
+                            <div class="text-center">
+                                {{ product.priceWt|price }}
+                            </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ path('app_product_productdetails', {'slug': product.slug})}}" class="btn btn-dark">Description</a>
+                            <a href="{{ path('app_product_productdetails', {'slug': product.slug})}}" class="btn btn-dark w-100">Description</a>
                         </div>
                     </div>
                 </div>

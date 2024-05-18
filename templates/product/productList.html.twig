@@ -8,14 +8,17 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for product in products %}
                 <div class="col">
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-lg">
                         <img src="/uploads/{{ product.image }}" class="card-img-top img-fluid" alt="{{ product.name }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
+                            <h5 class="card-title text-center">{{ product.name }}</h5>
+                            <div class="text-center">
+                                {{ product.priceWt|price }}
+                            </div>
                         </div>
                         <div class="card-footer">
                              <!-- <a href="" path('product_description', {id: product.id}) class="btn btn-primary">Description</a> -->
-                            <a href="{{ path('app_product_productdetails',{'slug': product.slug})}}" class="btn btn-dark">Description</a>
+                            <a href="{{ path('app_product_productdetails',{'slug': product.slug})}}" class="btn btn-dark w-100">Description</a>
                         </div>
                     </div>
                 </div>
