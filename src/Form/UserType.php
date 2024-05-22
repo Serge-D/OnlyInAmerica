@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
 {
@@ -56,9 +58,14 @@ class UserType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'constraints' => [
+                    new NotBlank(),
                     new Length([
                         'min' => '12',
                         'max' => '30'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[A-Z])(?=.*[!@#$%^&*()-_=+<>,.?])(?=.*[0-9a-z]).{8,}$/',
+                        'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, un caractère spécial et des chiffres ou des lettres minuscules.',
                     ])
                 ],
                 'first_options' => [

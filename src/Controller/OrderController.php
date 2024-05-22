@@ -55,6 +55,11 @@ class OrderController extends AbstractController
         //création de la variable products pour afficher tous les produits de notre panier
         $products = $cart->getCart();
 
+        // si le panier est vide evite de pouvoir aller jusqu'au paiement
+        if($products == 0){
+            return $this->redirectToRoute('app_product_productlist');
+        }
+
         // J'indique à symfony qu'il y a un form à écouter sur cette route
         $form = $this->createForm(OrderType::class, null, [
             'addresses' => $this->getUser()->getAddresses()
