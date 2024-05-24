@@ -2,50 +2,53 @@
 
 {% block main %}
 
-    <h3>Commande n°{{ order.id }}</h3>
-    <span>Date de la commande : {{ order.createdAt|date('d/m/y') }}</span><br />
-    {# Nous allons chercher le template state afin d'afficher le statut de la commande et si il y a de nouveaux status qui sont ajoutés plus simple #}
-    {# On procede à un include pour le template et on passe la variable field à qui on attribut un tableau avec la clé 'value' #}
-    <span>Statut de la commande : {% include 'admin/state.html.twig' with { field : {'value' : order.state} } %}</span><br />
-    <span>Stripe session id : {{ order.stripeSessionId }}</span>
+    <div class="container my-5">
+        <h3>Commande n°{{ order.id }}</h3>
+        <span>Date de la commande : {{ order.createdAt|date('d/m/y') }}</span><br />
+        {# Nous allons chercher le template state afin d'afficher le statut de la commande et si il y a de nouveaux status qui sont ajoutés plus simple #}
+        {# On procede à un include pour le template et on passe la variable field à qui on attribut un tableau avec la clé 'value' #}
+        <span>Statut de la commande : {% include 'admin/state.html.twig' with { field : {'value' : order.state} } %}</span><br />
+        <span>Stripe session id : {{ order.stripeSessionId }}</span>
 
-    <div class="my-4">
-        <strong>Adresse de livraison</strong><br />
-        {{ order.addressDelivery|raw }}
-    </div>
+        <div class="my-4">
+            <strong>Adresse de livraison</strong><br />
+            {{ order.addressDelivery|raw }}
+        </div>
 
-    <strong>Contenu de la commande</strong><br />
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Nom du produit</th>
-            <th scope="col">Quantité</th>
-            <th scope="col">Prix unitaire H.T</th>
-            <th scope="col">TVA</th>
-            <th scope="col">Prix T.T.C</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for product in order.orderContents %}
-                {# {{ dump(product) }} #}
+        <strong>Contenu de la commande</strong><br />
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <td><img src="/uploads/{{product.productImage}}" width="100px" alt="{{ product.productName }}" ></td>
-                    <td>{{ product.productName }}</td>
-                    <td>{{ product.productQuantity }}</td>
-                    <td>{{ product.productPrice|price }}</td>
-                    <td>{{ product.productTva }}%</td>
-                    {% set coeff = 1 + (product.productTva / 100) %} {# permet de déclarer une variable directement dans twig #}
-                    <td>{{ ((coeff * product.productPrice) * product.productQuantity)|price }}</td>
+                    <th scope="col">Image</th>
+                    <th scope="col">Nom du produit</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix unitaire H.T</th>
+                    <th scope="col">TVA</th>
+                    <th scope="col">Prix T.T.C</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="fs-5">
-        <strong>Total H.T : </strong> {{ (order.totalWt - order.totalTva )|price }}<br/>
-        <strong>Total TVA : </strong> {{ order.totalTva|price }}<br/>
-        <strong>Total T.T.C : </strong> {{ order.totalWt|price }}
+                </thead>
+                <tbody>
+                {% for product in order.orderContents %}
+                    {# {{ dump(product) }} #}
+                    <tr>
+                        <td><img src="/uploads/{{product.productImage}}" width="100px" class="img-fluid" alt="{{ product.productName }}" ></td>
+                        <td>{{ product.productName }}</td>
+                        <td>{{ product.productQuantity }}</td>
+                        <td>{{ product.productPrice|price }}</td>
+                        <td>{{ product.productTva }}%</td>
+                        {% set coeff = 1 + (product.productTva / 100) %} {# permet de déclarer une variable directement dans twig #}
+                        <td>{{ ((coeff * product.productPrice) * product.productQuantity)|price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="fs-5">
+            <strong>Total H.T : </strong> {{ (order.totalWt - order.totalTva )|price }}<br/>
+            <strong>Total TVA : </strong> {{ order.totalTva|price }}<br/>
+            <strong>Total T.T.C : </strong> {{ order.totalWt|price }}
+        </div>
     </div>
-
 
 {% endblock %}
