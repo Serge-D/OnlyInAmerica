@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class CommentType extends AbstractType
 {
@@ -22,7 +23,13 @@ class CommentType extends AbstractType
                 'label' => 'Votre commentaire',
                 'attr' => [
                     'placeholder' => 'Veuillez indiquer votre commentaire ici'
-                ]
+                ],
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[\w\s\.,!?()-]*$/',
+                        'message' => 'Votre commentaire ne peut contenir que des lettres, des chiffres et certains caractères spéciaux (,.!?-)',
+                    ]),
+                ],
             ])
             ->add('submit', SubmitType::class,[
                 'label'=>'Envoyer',

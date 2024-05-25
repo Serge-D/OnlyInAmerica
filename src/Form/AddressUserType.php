@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddressUserType extends AbstractType
 {
@@ -21,30 +23,57 @@ class AddressUserType extends AbstractType
                 'label' => 'Votre prénom',
                 'attr' => [
                     'placeholder' => 'Indiquez votre prénom ...'
-                ]
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => '2',
+                        'max' => '50'
+                    ])
+                ],
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Votre nom',
                 'attr' => [
                     'placeholder' => 'Indiquez votre nom ...'
-                ]
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => '2',
+                        'max' => '50'
+                    ])
+                ],
             ])
             ->add('address', TextType::class, [
                 'label' => 'Votre adresse',
                 'attr' => [
                     'placeholder' => 'Indiquez votre adresse ...'
+                ],
+                'constraints'=>[
+                    new NotBlank([
+                        'message'=>'Veuillez saisir votre adresse'
+                    ])
                 ]
             ])
             ->add('zipcode', TextType::class, [
                 'label' => 'Votre code postal',
                 'attr' => [
                     'placeholder' => 'Indiquez votre code postal ...'
+                ],
+                'constraints'=>[
+                    new NotBlank([
+                    'message'=>'Veuillez saisir votre code postal'
+                    ])
                 ]
             ])
             ->add('city', TextType::class, [
                 'label' => 'Votre ville',
                 'attr' => [
                     'placeholder' => 'Indiquez votre ville ...'
+                ],
+                'constraints'=>[
+                    new NotBlank([
+                        'message'=>'Veuillez saisir votre ville'
+                    ])
                 ]
             ])
             ->add('country', CountryType::class, [
@@ -54,6 +83,11 @@ class AddressUserType extends AbstractType
                 'label' => 'Votre numéro de téléphone',
                 'attr' => [
                     'placeholder' => 'Indiquez votre numéro de téléphone ...'
+                ],
+                'constraints'=>[
+                    new NotBlank([
+                        'message'=>'Veuillez saisir votre numéro de téléphone'
+                    ])
                 ]
             ])
             ->add('submit', SubmitType::class, [

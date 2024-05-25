@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class PasswordUserType extends AbstractType
 {
@@ -34,6 +35,10 @@ class PasswordUserType extends AbstractType
                     new Length([
                         'min' => '4',
                         'max' => '30'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[A-Z])(?=.*[!@#$%^&*()-_=+<>,.?])(?=.*[0-9a-z]).{8,}$/',
+                        'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, un caractère spécial et des chiffres ou des lettres minuscules.',
                     ])
                 ],
                 'first_options' => [

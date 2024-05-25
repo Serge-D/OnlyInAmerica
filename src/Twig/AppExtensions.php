@@ -44,8 +44,4 @@ class AppExtensions extends AbstractExtension implements GlobalsInterface
         return $html;
     }
 
-    public function getName()
-    {
-        return 'acme_extension';
-    }
 }
