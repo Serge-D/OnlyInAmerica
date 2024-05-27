@@ -91,6 +91,10 @@ class UserType extends AbstractType
                     'class' => 'btn btn-success'
                 ]
             ])
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'contact',
+            ])
         ;
     }
 
