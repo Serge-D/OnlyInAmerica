@@ -21,6 +21,13 @@ class CartController extends AbstractController
                 'Vous avez annulé votre paiement : vous pouvez mettre à jour votre panier'
             );
         }
+        if($cart->fullQuantity() === 0){
+            $this->addFlash(
+                'info',
+                'Votre panier est vide, voici la liste de tous les articles'
+            );
+            return $this->redirectToRoute('app_product_productlist');
+        }
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart->getCart(),

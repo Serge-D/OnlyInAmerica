@@ -83,10 +83,6 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            #Encryptage du mdp
-            # $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
-            # $user->setPassword($hashedPassword);
-
             #Sauvegarder dans la BDD
             $manager->persist($user); #persist = enregistrer / dire au manager d'enregistrer dans la bdd
             $manager->flush(); #flush équivalent d'execute / requete Insert
